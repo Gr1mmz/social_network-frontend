@@ -1,7 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import {Box, Paper} from '@mui/material';
+import {Avatar, Box, Grid, Paper, Stack, Typography} from '@mui/material';
 import React from 'react';
+import ProfileInfo from '../components/PagesComponents/Profile/ProfileInfo';
+import ProfilePost from '../components/PagesComponents/Profile/ProfilePost';
+import MainLayout from '../components/PagesComponents/MainLayout/MainLayout';
 
 const Home: NextPage = () => {
   return (
@@ -13,37 +16,39 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Box
-          sx={{
-            bgcolor: 'background.default',
-            width: '100%',
-            height: '100vh',
-            color: '#fff',
-            display: 'flex',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Paper elevation={6}
-            sx={{
-              boxShadow: 0,
-              width: '20%',
-              minWidth: '200px',
-              padding: '2em',
-              borderTopRightRadius: '30px',
-              borderBottomRightRadius: '30px',
-            }}>
-            Paper
-          </Paper>
-          <Box sx={{
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            Социальная сеть нового поколения
-          </Box>
-        </Box>
+        <MainLayout>
+          <Grid container spacing={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid item xs={12}>
+              <ProfileInfo/>
+            </Grid>
+            <Grid item xs={8}>
+              <Box>
+                <Typography variant='h2' gutterBottom sx={{fontSize: '1.5em'}}>
+                  Активность
+                </Typography>
+                <Stack spacing={2}>
+                  <ProfilePost/>
+                  <ProfilePost/>
+                  <ProfilePost/>
+                </Stack>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box>
+                <Typography variant='h2' gutterBottom sx={{fontSize: '1.5em'}}>
+                  Друзья
+                </Typography>
+                <Paper elevation={6} sx={{borderRadius: '10px', padding: '2em'}}>
+                  <Stack direction="row" spacing={1}>
+                    <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/1.jpg" />
+                    <Avatar alt="Travis Howard" src="https://mui.com/static/images/avatar/2.jpg" />
+                    <Avatar alt="Cindy Baker" src="https://mui.com/static/images/avatar/3.jpg" />
+                  </Stack>
+                </Paper>
+              </Box>
+            </Grid>
+          </Grid>
+        </MainLayout>
       </main>
     </div>
   )
