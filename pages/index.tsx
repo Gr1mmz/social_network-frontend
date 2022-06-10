@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import {Box} from '@mui/material';
+import {Box, Paper} from '@mui/material';
 import React from 'react';
 
 const Home: NextPage = () => {
@@ -23,17 +23,17 @@ const Home: NextPage = () => {
             justifyContent: 'space-between'
           }}
         >
-          <Box sx={{
-            bgcolor: 'background.paper',
-            boxShadow: 0,
-            width: '20%',
-            minWidth: '200px',
-            padding: '2em',
-            borderTopRightRadius: '30px',
-            borderBottomRightRadius: '30px',
-          }}>
+          <Paper elevation={6}
+            sx={{
+              boxShadow: 0,
+              width: '20%',
+              minWidth: '200px',
+              padding: '2em',
+              borderTopRightRadius: '30px',
+              borderBottomRightRadius: '30px',
+            }}>
             Paper
-          </Box>
+          </Paper>
           <Box sx={{
             height: '100%',
             width: '100%',

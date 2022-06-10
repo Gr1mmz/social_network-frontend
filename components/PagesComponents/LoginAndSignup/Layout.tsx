@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box} from '@mui/material';
+import {Box, Paper} from '@mui/material';
 
 interface ILoginProps {
   children: React.ReactElement
@@ -26,9 +26,7 @@ const Layout: React.FC<ILoginProps> = ({children}) => {
       }}>
         Социальная сеть нового поколения
       </Box>
-      <Box sx={{
-        bgcolor: 'background.paper',
-        boxShadow: 0,
+      <Paper elevation={6} sx={{
         width: '50%',
         minWidth: '320px',
         padding: '3em',
@@ -36,7 +34,7 @@ const Layout: React.FC<ILoginProps> = ({children}) => {
         borderBottomLeftRadius: '20px',
       }}>
         {children}
-      </Box>
+      </Paper>
     </Box>
   );
 };
