@@ -5,6 +5,8 @@ import React from 'react';
 import ProfileInfo from '../components/PagesComponents/Profile/ProfileInfo';
 import ProfilePost from '../components/PagesComponents/Profile/ProfilePost';
 import MainLayout from '../components/PagesComponents/MainLayout/MainLayout';
+import ProfilePosts from '../components/PagesComponents/Profile/ProfilePosts';
+import ProfileFriends from '../components/PagesComponents/Profile/ProfileFriends';
 
 const Home: NextPage = () => {
   return (
@@ -19,33 +21,21 @@ const Home: NextPage = () => {
         <MainLayout>
           <Grid container spacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={12}>
-              <ProfileInfo/>
+              <Grid container justifyContent='center'>
+                <Grid item xs={12} xl={8} >
+                  <ProfileInfo/>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <Box>
-                <Typography variant='h2' gutterBottom sx={{fontSize: '1.5em'}}>
-                  Активность
-                </Typography>
-                <Stack spacing={2}>
-                  <ProfilePost/>
-                  <ProfilePost/>
-                  <ProfilePost/>
-                </Stack>
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box>
-                <Typography variant='h2' gutterBottom sx={{fontSize: '1.5em'}}>
-                  Друзья
-                </Typography>
-                <Paper elevation={6} sx={{borderRadius: '10px', padding: '2em'}}>
-                  <Stack direction="row" spacing={1}>
-                    <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/1.jpg" />
-                    <Avatar alt="Travis Howard" src="https://mui.com/static/images/avatar/2.jpg" />
-                    <Avatar alt="Cindy Baker" src="https://mui.com/static/images/avatar/3.jpg" />
-                  </Stack>
-                </Paper>
-              </Box>
+            <Grid item xs={12}>
+              <Grid container spacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' >
+                <Grid item xs={8} xl={5}>
+                  <ProfilePosts/>
+                </Grid>
+                <Grid item xs={4} xl={3}>
+                  <ProfileFriends/>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </MainLayout>

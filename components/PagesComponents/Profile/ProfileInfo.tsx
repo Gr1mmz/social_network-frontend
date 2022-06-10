@@ -10,7 +10,7 @@ const ProfileInfo = () => {
         TS
       </Avatar>
       <Box>
-        <Typography gutterBottom sx={{fontSize: '1.5em'}}>Tony Stark</Typography>
+        <Typography gutterBottom sx={{fontSize: '2em'}}>Tony Stark</Typography>
         <Stack spacing={1}>
           <Typography variant='body1' sx={{fontSize: '0.8em'}}>
             <Typography variant='body2' sx={{fontSize: '1em'}}>Город: </Typography>
