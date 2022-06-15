@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Head from 'next/head';
 import {NextPage} from 'next';
 import SignupForm from '../../components/PagesComponents/LoginAndSignup/SignupForm';
 import Layout from '../../components/PagesComponents/LoginAndSignup/Layout';
+import {AlertColor} from '@mui/material';
 
 const SignupPage: NextPage = () => {
+  const [isAlertShown, setIsAlertShown] = useState(false);
+  const [alertType, setAlertType] = useState<AlertColor | undefined>('success');
+
   return (
     <div>
       <Head>
@@ -14,8 +18,8 @@ const SignupPage: NextPage = () => {
       </Head>
 
       <main>
-        <Layout>
-          <SignupForm/>
+        <Layout alert={isAlertShown} setAlert={setIsAlertShown} alertType={alertType}>
+          <SignupForm setAlert={setIsAlertShown} setAlertType={setAlertType}/>
         </Layout>
       </main>
     </div>

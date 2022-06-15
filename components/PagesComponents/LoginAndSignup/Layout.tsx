@@ -1,11 +1,23 @@
-import React from 'react';
-import {Box, Paper} from '@mui/material';
+import React, {Dispatch, SetStateAction, useEffect} from 'react';
+import {Alert, AlertColor, Box, Link, Paper} from '@mui/material';
+import NextLink from 'next/link';
+import CustomAlert from '../../OtherComponents/Alert/CustomAlert';
 
 interface ILoginProps {
-  children: React.ReactElement
+  children: React.ReactElement,
+  alert: boolean,
+  setAlert: Dispatch<SetStateAction<boolean>>,
+  alertType: AlertColor | undefined
 }
 
-const Layout: React.FC<ILoginProps> = ({children}) => {
+const Layout: React.FC<ILoginProps> = (
+  {
+    children,
+    alert,
+    setAlert,
+    alertType
+  }) => {
+
   return (
     <Box
       sx={{
@@ -35,6 +47,7 @@ const Layout: React.FC<ILoginProps> = ({children}) => {
       }}>
         {children}
       </Paper>
+      {alert ? <CustomAlert type={alertType} handleClick={() => setAlert(true)}/> : null}
     </Box>
   );
 };
