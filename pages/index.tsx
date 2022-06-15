@@ -1,9 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import {Avatar, Box, Grid, Paper, Stack, Typography} from '@mui/material';
+import {Grid} from '@mui/material';
 import React from 'react';
 import ProfileInfo from '../components/PagesComponents/Profile/ProfileInfo';
-import ProfilePost from '../components/PagesComponents/Profile/ProfilePost';
 import MainLayout from '../components/PagesComponents/MainLayout/MainLayout';
 import ProfilePosts from '../components/PagesComponents/Profile/ProfilePosts';
 import ProfileFriends from '../components/PagesComponents/Profile/ProfileFriends';
@@ -42,6 +41,6 @@ const Home: NextPage = () => {
       </main>
     </div>
   )
-}
+};
 
 export default Home

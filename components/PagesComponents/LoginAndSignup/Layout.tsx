@@ -1,13 +1,13 @@
-import React, {Dispatch, SetStateAction, useEffect} from 'react';
-import {Alert, AlertColor, Box, Link, Paper} from '@mui/material';
-import NextLink from 'next/link';
+import React, {Dispatch, SetStateAction} from 'react';
+import {AlertColor, Box, Paper} from '@mui/material';
 import CustomAlert from '../../OtherComponents/Alert/CustomAlert';
 
 interface ILoginProps {
   children: React.ReactElement,
   alert: boolean,
   setAlert: Dispatch<SetStateAction<boolean>>,
-  alertType: AlertColor | undefined
+  alertType: AlertColor | undefined,
+  errorCode: PropertyKey
 }
 
 const Layout: React.FC<ILoginProps> = (
@@ -15,7 +15,8 @@ const Layout: React.FC<ILoginProps> = (
     children,
     alert,
     setAlert,
-    alertType
+    alertType,
+    errorCode
   }) => {
 
   return (
@@ -42,12 +43,12 @@ const Layout: React.FC<ILoginProps> = (
         width: '50%',
         minWidth: '320px',
         padding: '3em',
-        borderTopLeftRadius: '20px',
-        borderBottomLeftRadius: '20px',
+        borderTopLeftRadius: '10px',
+        borderBottomLeftRadius: '10px',
       }}>
         {children}
       </Paper>
-      {alert ? <CustomAlert type={alertType} handleClick={() => setAlert(true)}/> : null}
+      {alert ? <CustomAlert type={alertType} handleClick={() => setAlert(true)} errorCode={errorCode}/> : null}
     </Box>
   );
 };

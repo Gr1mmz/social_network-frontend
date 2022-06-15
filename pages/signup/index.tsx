@@ -8,6 +8,7 @@ import {AlertColor} from '@mui/material';
 const SignupPage: NextPage = () => {
   const [isAlertShown, setIsAlertShown] = useState(false);
   const [alertType, setAlertType] = useState<AlertColor | undefined>('success');
+  const [errorCode, setErrorCode] = useState('');
 
   return (
     <div>
@@ -18,8 +19,8 @@ const SignupPage: NextPage = () => {
       </Head>
 
       <main>
-        <Layout alert={isAlertShown} setAlert={setIsAlertShown} alertType={alertType}>
-          <SignupForm setAlert={setIsAlertShown} setAlertType={setAlertType}/>
+        <Layout alert={isAlertShown} setAlert={setIsAlertShown} alertType={alertType} errorCode={errorCode}>
+          <SignupForm setAlert={setIsAlertShown} setAlertType={setAlertType} setErrorCode={setErrorCode}/>
         </Layout>
       </main>
     </div>

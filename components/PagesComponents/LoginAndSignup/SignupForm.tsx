@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useRef, useState} from 'react';
+import React, {Dispatch, SetStateAction, useRef} from 'react';
 import Parse from 'parse';
 import {AlertColor, Box, Button, Link, Stack, TextField, Typography} from '@mui/material';
 import NextLink from 'next/link';
@@ -7,12 +7,13 @@ import * as yup from 'yup';
 
 interface ISignupProps {
   setAlert: Dispatch<SetStateAction<boolean>>,
-  setAlertType: Dispatch<SetStateAction<AlertColor | undefined>>
+  setAlertType: Dispatch<SetStateAction<AlertColor | undefined>>,
+  setErrorCode: Dispatch<any>
 }
 
-const SignupForm: React.FC<ISignupProps> = ({setAlert, setAlertType}) => {
+const SignupForm: React.FC<ISignupProps> = ({setAlert, setAlertType, setErrorCode}) => {
   const validationSchema = yup.object().shape({
-    username: yup.string().required('Обязательное поле'),
+    username: yup.string().max(30, 'Длина не должна превышать 30 символов').required('Обязательное поле'),
     email: yup.string().email('Введите e-mail в формате mail@mail.ru').required('Обязательное поле'),
     password: yup.string().min(8, 'Минимальная длина пароля 8 символов').required('Обязательное поле'),
   });
@@ -40,6 +41,7 @@ const SignupForm: React.FC<ISignupProps> = ({setAlert, setAlertType}) => {
       return true;
     } catch (error: any) {
       showAlert('error');
+      setErrorCode(error.code);
       console.log(`Error ${error}`);
       return false;
     }

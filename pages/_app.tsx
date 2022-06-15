@@ -11,17 +11,15 @@ import {theme} from '../src/theme';
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache,
-  APP_ID: string,
-  JS_KEY: string,
-  HOST_URL: string,
+  emotionCache?: EmotionCache
 };
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-  Parse.initialize(props.APP_ID as string, props.JS_KEY as string);
-  Parse.serverURL = props.HOST_URL as string;
+  Parse.initialize(process.env.NEXT_PUBLIC_PARSE_APPLICATION_ID as string,
+    process.env.NEXT_PUBLIC_PARSE_JAVASCRIPT_KEY as string);
+  Parse.serverURL = process.env.NEXT_PUBLIC_PARSE_HOST_URL as string;
 
   return (
     <CacheProvider value={emotionCache}>
@@ -37,13 +35,3 @@ function MyApp(props: MyAppProps) {
 }
 
 export default MyApp
-
-function getStaticProps() {
-  return {
-    props: {
-      APP_ID: process.env.APP_ID,
-      JS_KEY: process.env.JS_KEY,
-      HOST_URL: process.env.HOST_URL
-    }
-  }
-}
