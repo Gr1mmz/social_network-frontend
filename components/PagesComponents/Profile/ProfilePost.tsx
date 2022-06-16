@@ -33,9 +33,9 @@ const ProfilePost = () => {
   return (
     <Card>
       <CardHeader
-        avatar={<Avatar sx={{bgcolor: red[500]}} aria-label='recipe'>TS</Avatar>}
+        avatar={<Avatar sx={{bgcolor: red[500]}} aria-label='recipe'>SA</Avatar>}
         action={<IconButton aria-label='settings'><MoreVertIcon/></IconButton>}
-        title='Tony Stark' subheader='June 10, 2022'/>
+        title='Smart Aboba' subheader='June 10, 2022'/>
       <CardMedia component='img' height='194' alt='Paella dish'
                  image='https://mui.com/static/images/cards/paella.jpg'/>
       <CardContent>

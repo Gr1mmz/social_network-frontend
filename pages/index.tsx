@@ -1,13 +1,36 @@
 import type { NextPage } from 'next';
+import Parse from 'parse';
+import {useRouter} from 'next/router';
 import Head from 'next/head';
 import {Grid} from '@mui/material';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ProfileInfo from '../components/PagesComponents/Profile/ProfileInfo';
 import MainLayout from '../components/PagesComponents/MainLayout/MainLayout';
 import ProfilePosts from '../components/PagesComponents/Profile/ProfilePosts';
 import ProfileFriends from '../components/PagesComponents/Profile/ProfileFriends';
 
 const Home: NextPage = () => {
+  const [currentUser, setCurrentUser] = useState<Parse.User | null>(null);
+
+  const router = useRouter();
+  useEffect(() => {
+    const checkCurrentUser = async (): Promise<Boolean> => {
+      try {
+        const user: (Parse.User | null) = await Parse.User.currentAsync();
+        if (user === null || user === undefined) {
+          await router.push('/login');
+        } else {
+          if (currentUser === null) {
+            setCurrentUser(user);
+          }
+        }
+        return true;
+      } catch (_error: any) {}
+      return false;
+    }
+    checkCurrentUser();
+    console.log(currentUser);
+  });
   return (
     <div>
       <Head>
@@ -17,27 +40,29 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <MainLayout>
-          <Grid container spacing={{ xs: 1, sm: 2, md: 3 }}>
-            <Grid item xs={12}>
-              <Grid container justifyContent='center'>
-                <Grid item xs={12} xl={8} >
-                  <ProfileInfo/>
+        {currentUser && (
+          <MainLayout>
+            <Grid container spacing={{ xs: 1, sm: 2, md: 3 }}>
+              <Grid item xs={12}>
+                <Grid container justifyContent='center'>
+                  <Grid item xs={12} xl={8} >
+                    <ProfileInfo/>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' >
+                  <Grid item xs={8} xl={5}>
+                    <ProfilePosts/>
+                  </Grid>
+                  <Grid item xs={4} xl={3}>
+                    <ProfileFriends/>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Grid container spacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' >
-                <Grid item xs={8} xl={5}>
-                  <ProfilePosts/>
-                </Grid>
-                <Grid item xs={4} xl={3}>
-                  <ProfileFriends/>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </MainLayout>
+          </MainLayout>
+        )}
       </main>
     </div>
   );

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Parse from 'parse';
 import {Box, Button, Grid, Link, Paper, Stack} from '@mui/material';
 import NextLink from 'next/link';
 import links from './sidebarLinksText';
 import LogoutIcon from '@mui/icons-material/Logout';
+import {useRouter} from 'next/router';
 
 interface ILink {
   id: number,
@@ -10,7 +12,39 @@ interface ILink {
   url: string,
 }
 
-const Sidebar = () => {
+const Sidebar: React.FC<{}> = (): React.ReactElement => {
+  const router = useRouter();
+
+  const [currentUser, setCurrentUser] = useState<Parse.Object | undefined>();
+
+  const getCurrentUser = async function (): Promise<Parse.User | undefined> {
+    const currentUser: (Parse.User | undefined) = await Parse.User.current();
+    // Update state variable holding current user
+    if(currentUser) {
+      setCurrentUser(currentUser);
+      return currentUser;
+    }
+  };
+
+  const doUserLogOut = async function (): Promise<boolean> {
+    try {
+      await Parse.User.logOut();
+      // To verify that current user is now empty, currentAsync can be used
+      // @ts-ignore
+      const currentUser: Parse.User = await Parse.User.current();
+      if (currentUser === null || undefined) {
+        console.log('Success! No user is logged in anymore!');
+        router.push('/login');
+      }
+      // Update state variable holding current user
+      await getCurrentUser();
+      return true;
+    } catch (error: any) {
+      console.log(`Error! ${error.message}`);
+      return false;
+    }
+  };
+
   return (
     <Grid item sx={{position: 'sticky', alignSelf: 'start', top: '1em', height: 'calc(100vh - 33px)'}}>
       <Paper elevation={6}
@@ -39,7 +73,7 @@ const Sidebar = () => {
               </NextLink>
             ))}
           </Stack>
-          <Button variant='contained' startIcon={<LogoutIcon />}>
+          <Button variant='contained' startIcon={<LogoutIcon />} onClick={() => doUserLogOut()}>
             Выйти
           </Button>
         </Box>
