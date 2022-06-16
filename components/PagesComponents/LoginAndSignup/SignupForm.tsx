@@ -91,6 +91,7 @@ const SignupForm: React.FC<ISignupProps> = ({setAlert, setAlertType, setErrorCod
             </Button>
           </Stack>
           <Box sx={{fontSize: '0.8em', display: 'flex', gap: '0.5em', justifyContent: 'center'}}>
+            Уже есть аккаунт?
             <NextLink href="/login" passHref>
               <Link>Войти</Link>
             </NextLink>
