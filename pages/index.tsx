@@ -40,7 +40,7 @@ const Home: NextPage = () => {
         </MainLayout>
       </main>
     </div>
-  )
+  );
 };
 
-export default Home
+export default Home;

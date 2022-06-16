@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import Head from 'next/head';
 import {NextPage} from 'next';
+import {AlertColor} from '@mui/material';
 import SignupForm from '../../components/PagesComponents/LoginAndSignup/SignupForm';
 import Layout from '../../components/PagesComponents/LoginAndSignup/Layout';
-import {AlertColor} from '@mui/material';
 
 const SignupPage: NextPage = () => {
   const [isAlertShown, setIsAlertShown] = useState(false);

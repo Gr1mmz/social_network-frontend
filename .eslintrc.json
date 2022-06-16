@@ -1,4 +1,10 @@
 {
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -6,20 +12,41 @@
     "plugin:import/warnings"
 //    "next/core-web-vitals",
   ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true // enable linting for jsx files
+    },
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "plugins": ["react", "react-hooks", "@typescript-eslint"],
   "rules": {
-    "no-unused-vars": "warn",
-    "no-console": "warn",
-    "quotes": ["warn", "single"],
-    "jsx-quotes": ["error", "prefer-double"],
-    "prefer-const": "error",
-    "indent": ["warn", 2],
-    "max-len": ["error", {
-      "code": 120
-    }],
-    "comma-dangle": ["error", "always-multiline"],
-    "semi": ["warn", "always"],
+    "semi": "off",
+    "@typescript-eslint/semi": "error",
+    // NextJs specific fix: suppress errors for missing 'import React' in files for nextjs
+    "react/react-in-jsx-scope": "off",
+    // NextJs specific fix: allow jsx syntax in js files
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }], //should add ".ts" if typescript project
+    "react/display-name": 1,
+    "react/jsx-props-no-spreading": "off",
+    "react/no-array-index-key": "off",
+    "no-console": "off",
+    "react/function-component-definition": "off",
+    "import/prefer-default-export": "off",
     "import/extensions": "off",
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "no-restricted-syntax": "off",
+    "no-use-before-define": "off",
+    "react/require-default-props": "off"
   }
 }

@@ -4,10 +4,10 @@ import CustomAlert from '../../OtherComponents/Alert/CustomAlert';
 
 interface ILoginProps {
   children: React.ReactElement,
-  alert: boolean,
-  setAlert: Dispatch<SetStateAction<boolean>>,
-  alertType: AlertColor | undefined,
-  errorCode: PropertyKey
+  alert?: boolean,
+  setAlert?: Dispatch<SetStateAction<boolean>>,
+  alertType?: AlertColor | undefined,
+  errorCode?: PropertyKey
 }
 
 const Layout: React.FC<ILoginProps> = (
@@ -48,7 +48,10 @@ const Layout: React.FC<ILoginProps> = (
       }}>
         {children}
       </Paper>
-      {alert ? <CustomAlert type={alertType} handleClick={() => setAlert(true)} errorCode={errorCode}/> : null}
+      {alert && setAlert && <CustomAlert type={alertType}
+                                         handleClick={() => setAlert(false)}
+                                         errorCode={errorCode}/>
+      }
     </Box>
   );
 };
