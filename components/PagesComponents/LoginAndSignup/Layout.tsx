@@ -46,12 +46,20 @@ const Layout: React.FC<ILoginProps> = (
         <Box sx={{position: 'absolute', height: '100vh', width: '100%', left: '-50%'}}>
           <Image src={monkey} layout='fill'/>
         </Box>
-        <Box>
-          <Image src={logo}/>
+        <Box sx={{
+          position: 'relative',
+          zIndex: '10',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}>
+          <Box>
+            <Image src={logo}/>
+          </Box>
+          <Typography variant='h5' component='h1'>
+            Социальная сеть нового поколения
+          </Typography>
         </Box>
-        <Typography variant='h5' component='h1'>
-          Социальная сеть нового поколения
-        </Typography>
       </Box>
       <Paper elevation={6} sx={{
         width: '50%',
