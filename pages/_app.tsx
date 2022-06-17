@@ -1,12 +1,13 @@
+import {useEffect} from 'react';
 import Head from 'next/head';
-import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import Parse from 'parse';
 import { ThemeProvider } from '@mui/material/styles';
-import { CacheProvider, EmotionCache } from '@emotion/react';
+import { CacheProvider, type EmotionCache } from '@emotion/react';
 import createEmotionCache from '../src/createEmotionCache';
 import {CssBaseline} from '@mui/material';
 import {theme} from '../src/theme';
+import {initializeParse} from '../parse/functions';
+import '../styles/globals.css';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -17,9 +18,7 @@ interface MyAppProps extends AppProps {
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-  Parse.initialize(process.env.NEXT_PUBLIC_PARSE_APPLICATION_ID as string,
-    process.env.NEXT_PUBLIC_PARSE_JAVASCRIPT_KEY as string);
-  Parse.serverURL = process.env.NEXT_PUBLIC_PARSE_HOST_URL as string;
+  useEffect(() => initializeParse(), []);
 
   return (
     <CacheProvider value={emotionCache}>

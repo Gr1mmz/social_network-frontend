@@ -1,36 +1,22 @@
-import type { NextPage } from 'next';
-import Parse from 'parse';
+import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import Head from 'next/head';
+import type { NextPage } from 'next';
+import Parse from 'parse';
 import {Grid} from '@mui/material';
-import React, {useEffect, useState} from 'react';
 import ProfileInfo from '../components/PagesComponents/Profile/ProfileInfo';
 import MainLayout from '../components/PagesComponents/MainLayout/MainLayout';
 import ProfilePosts from '../components/PagesComponents/Profile/ProfilePosts';
 import ProfileFriends from '../components/PagesComponents/Profile/ProfileFriends';
+import {checkCurrentUser} from '../parse/functions';
 
 const Home: NextPage = () => {
   const [currentUser, setCurrentUser] = useState<Parse.User | null>(null);
-
   const router = useRouter();
+
   useEffect(() => {
-    const checkCurrentUser = async (): Promise<Boolean> => {
-      try {
-        const user: (Parse.User | null) = await Parse.User.currentAsync();
-        if (user === null || user === undefined) {
-          await router.push('/login');
-        } else {
-          if (currentUser === null) {
-            setCurrentUser(user);
-          }
-        }
-        return true;
-      } catch (error: any) {}
-      return false;
-    }
-    checkCurrentUser();
-    // console.log(currentUser);
-  });
+    checkCurrentUser(currentUser, setCurrentUser, router);
+  }, []);
   return (
     <div>
       <Head>

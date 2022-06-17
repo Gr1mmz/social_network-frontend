@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
 import Head from 'next/head';
+import {useRouter} from 'next/router';
+import Parse from 'parse';
 import LoginForm from "../../components/PagesComponents/LoginAndSignup/LoginForm";
 import Layout from '../../components/PagesComponents/LoginAndSignup/Layout';
+import {checkCurrentUser} from '../../parse/functions';
 
 const LoginPage: NextPage = () => {
+  const [currentUser, setCurrentUser] = useState<Parse.User | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    checkCurrentUser(currentUser, setCurrentUser, router);
+  }, []);
+
   return (
     <div>
       <Head>
@@ -14,9 +24,11 @@ const LoginPage: NextPage = () => {
       </Head>
 
       <main>
-        <Layout>
-          <LoginForm/>
-        </Layout>
+        {!currentUser && (
+          <Layout>
+            <LoginForm/>
+          </Layout>
+        )}
       </main>
     </div>
   );

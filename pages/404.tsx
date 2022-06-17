@@ -2,7 +2,6 @@ import React from 'react';
 import {NextPage} from 'next';
 import Head from 'next/head';
 import {Box, Link, Typography} from '@mui/material';
-import NextLink from 'next/link';
 import {useRouter} from 'next/router';
 
 const Custom404: NextPage = () => {

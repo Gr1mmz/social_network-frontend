@@ -1,4 +1,4 @@
-import React, {Attributes} from 'react';
+import React from 'react';
 import {Avatar, Box, Paper, Stack, Typography} from '@mui/material';
 import {red} from '@mui/material/colors';
 import { User } from 'parse';

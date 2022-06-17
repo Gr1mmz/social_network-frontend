@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Head from 'next/head';
 import {NextPage} from 'next';
-import {AlertColor} from '@mui/material';
+import type {AlertColor} from '@mui/material/Alert';
 import SignupForm from '../../components/PagesComponents/LoginAndSignup/SignupForm';
 import Layout from '../../components/PagesComponents/LoginAndSignup/Layout';
 

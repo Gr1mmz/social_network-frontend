@@ -1,5 +1,6 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {AlertColor, Box, Paper} from '@mui/material';
+import {Box, Paper} from '@mui/material';
+import type {AlertColor} from '@mui/material/Alert';
 import CustomAlert from '../../OtherComponents/Alert/CustomAlert';
 
 interface ILoginProps {

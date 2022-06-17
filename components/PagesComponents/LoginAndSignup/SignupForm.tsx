@@ -1,9 +1,10 @@
 import React, {Dispatch, SetStateAction, useRef} from 'react';
-import Parse from 'parse';
-import {AlertColor, Box, Button, Link, Stack, TextField, Typography} from '@mui/material';
 import NextLink from 'next/link';
 import {Formik} from 'formik';
 import * as yup from 'yup';
+import {Box, Button, Link, Stack, TextField, Typography} from '@mui/material';
+import type {AlertColor} from '@mui/material/Alert';
+import {doUserRegistration} from '../../../parse/functions';
 
 interface ISignupProps {
   setAlert: Dispatch<SetStateAction<boolean>>,
@@ -12,40 +13,13 @@ interface ISignupProps {
 }
 
 const SignupForm: React.FC<ISignupProps> = ({setAlert, setAlertType, setErrorCode}) => {
+  const ref = useRef(null);
+
   const validationSchema = yup.object().shape({
     username: yup.string().max(30, 'Длина не должна превышать 30 символов').required('Обязательное поле'),
     email: yup.string().email('Введите e-mail в формате mail@mail.ru').required('Обязательное поле'),
     password: yup.string().min(8, 'Минимальная длина пароля 8 символов').required('Обязательное поле'),
   });
-
-  const ref = useRef(null);
-
-  const doUserRegistration: (actions: any) => Promise<boolean> = async (actions) => {
-    // @ts-ignore
-    const {username: usernameValue, password: passwordValue, email: emailValue} = ref?.current?.values;
-    const showAlert = (type: AlertColor | undefined) => {
-      setAlertType(type);
-      setAlert(true);
-      setTimeout(() => {
-        setAlert(false);
-      }, 5000);
-      if (type === 'success') {
-        actions.resetForm();
-      }
-    };
-
-    try {
-      const createdUser = await Parse.User.signUp(usernameValue, passwordValue, {email: emailValue});
-      console.log(`Success! User ${createdUser.getUsername()} was successfully created!`);
-      showAlert('success');
-      return true;
-    } catch (error: any) {
-      showAlert('error');
-      setErrorCode(error.code);
-      console.log(`Error ${error}`);
-      return false;
-    }
-  };
 
   return (
     <Formik validateOnBlur validationSchema={validationSchema} innerRef={ref}
@@ -55,7 +29,7 @@ const SignupForm: React.FC<ISignupProps> = ({setAlert, setAlertType, setErrorCod
               password: ''
             }}
             onSubmit={(values, actions) => {
-              doUserRegistration(actions);
+              doUserRegistration(actions, setAlert, setAlertType, setErrorCode, ref);
             }}>
       {({
           values,

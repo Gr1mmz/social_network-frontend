@@ -1,5 +1,6 @@
 import React from 'react';
-import {Alert, AlertColor, Link} from '@mui/material';
+import {Alert, Link} from '@mui/material';
+import type {AlertColor} from '@mui/material/Alert';
 import NextLink from 'next/link';
 import {errorCodes} from './errorCodes';
 

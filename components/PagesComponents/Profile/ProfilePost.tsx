@@ -1,6 +1,7 @@
 import React from 'react';
-import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, IconButtonProps,
+import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton,
   Typography} from '@mui/material';
+import type {IconButtonProps} from '@mui/material/IconButton';
 import {red} from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';

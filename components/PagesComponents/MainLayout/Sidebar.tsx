@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
+import NextLink from 'next/link';
+import {useRouter} from 'next/router';
 import Parse from 'parse';
 import {Box, Button, Grid, Link, Paper, Stack} from '@mui/material';
-import NextLink from 'next/link';
-import links from './sidebarLinksText';
 import LogoutIcon from '@mui/icons-material/Logout';
-import {useRouter} from 'next/router';
+import links from './sidebarLinksText';
+import {doUserLogOut} from '../../../parse/functions';
 
 interface ILink {
   id: number,
@@ -13,37 +14,8 @@ interface ILink {
 }
 
 const Sidebar: React.FC<{}> = (): React.ReactElement => {
-  const router = useRouter();
-
   const [currentUser, setCurrentUser] = useState<Parse.Object | undefined>();
-
-  const getCurrentUser = async function (): Promise<Parse.User | undefined> {
-    const currentUser: (Parse.User | undefined) = await Parse.User.current();
-    // Update state variable holding current user
-    if(currentUser) {
-      setCurrentUser(currentUser);
-      return currentUser;
-    }
-  };
-
-  const doUserLogOut = async function (): Promise<boolean> {
-    try {
-      await Parse.User.logOut();
-      // To verify that current user is now empty, currentAsync can be used
-      // @ts-ignore
-      const currentUser: Parse.User = await Parse.User.current();
-      if (currentUser === null || undefined) {
-        console.log('Success! No user is logged in anymore!');
-        router.push('/login');
-      }
-      // Update state variable holding current user
-      await getCurrentUser();
-      return true;
-    } catch (error: any) {
-      console.log(`Error! ${error.message}`);
-      return false;
-    }
-  };
+  const router = useRouter();
 
   return (
     <Grid item sx={{position: 'sticky', alignSelf: 'start', top: '1em', height: 'calc(100vh - 33px)'}}>
@@ -73,7 +45,8 @@ const Sidebar: React.FC<{}> = (): React.ReactElement => {
               </NextLink>
             ))}
           </Stack>
-          <Button variant='contained' startIcon={<LogoutIcon />} onClick={() => doUserLogOut()}>
+          <Button variant='contained' startIcon={<LogoutIcon />}
+                  onClick={() => doUserLogOut(setCurrentUser, router)}>
             Выйти
           </Button>
         </Box>
