@@ -1,7 +1,10 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {Box, Paper} from '@mui/material';
+import Image from 'next/image';
+import {Box, Paper, Typography} from '@mui/material';
 import type {AlertColor} from '@mui/material/Alert';
 import CustomAlert from '../../OtherComponents/Alert/CustomAlert';
+import monkey from './monkey.svg';
+import logo from './logo.png';
 
 interface ILoginProps {
   children: React.ReactElement,
@@ -35,10 +38,20 @@ const Layout: React.FC<ILoginProps> = (
         height: '100%',
         width: '100%',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        position: 'relative'
       }}>
-        Социальная сеть нового поколения
+        <Box sx={{position: 'absolute', height: '100vh', width: '100%', left: '-50%'}}>
+          <Image src={monkey} layout='fill'/>
+        </Box>
+        <Box>
+          <Image src={logo}/>
+        </Box>
+        <Typography variant='h5' component='h1'>
+          Социальная сеть нового поколения
+        </Typography>
       </Box>
       <Paper elevation={6} sx={{
         width: '50%',
