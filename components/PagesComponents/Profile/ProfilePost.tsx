@@ -7,6 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {styled} from '@mui/material/styles';
+import {User} from 'parse';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -23,7 +24,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const ProfilePost = () => {
+interface IProfilePostProps {
+  currentUser: User
+}
+
+const ProfilePost: React.FC<IProfilePostProps> = ({currentUser}) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -33,9 +38,9 @@ const ProfilePost = () => {
   return (
     <Card>
       <CardHeader
-        avatar={<Avatar sx={{bgcolor: red[500]}} aria-label='recipe'>SA</Avatar>}
+        avatar={<Avatar sx={{bgcolor: red[500]}} aria-label='avatar'>{currentUser.attributes.username[0]}</Avatar>}
         action={<IconButton aria-label='settings'><MoreVertIcon/></IconButton>}
-        title='Smart Aboba' subheader='June 10, 2022'/>
+        title={currentUser.attributes.username} subheader='June 10, 2022'/>
       <CardMedia component='img' height='194' alt='Paella dish'
                  image='https://mui.com/static/images/cards/paella.jpg'/>
       <CardContent>

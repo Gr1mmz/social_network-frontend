@@ -25,11 +25,11 @@ const Home: NextPage = () => {
           }
         }
         return true;
-      } catch (_error: any) {}
+      } catch (error: any) {}
       return false;
     }
     checkCurrentUser();
-    console.log(currentUser);
+    // console.log(currentUser);
   });
   return (
     <div>
@@ -46,14 +46,14 @@ const Home: NextPage = () => {
               <Grid item xs={12}>
                 <Grid container justifyContent='center'>
                   <Grid item xs={12} xl={8} >
-                    <ProfileInfo/>
+                    <ProfileInfo currentUser={currentUser}/>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item xs={12}>
                 <Grid container spacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' >
                   <Grid item xs={8} xl={5}>
-                    <ProfilePosts/>
+                    <ProfilePosts currentUser={currentUser}/>
                   </Grid>
                   <Grid item xs={4} xl={3}>
                     <ProfileFriends/>
