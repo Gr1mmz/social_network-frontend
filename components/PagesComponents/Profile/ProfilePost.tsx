@@ -43,7 +43,7 @@ const ProfilePost: React.FC<IProfilePostProps> = ({currentUser}) => {
           {`${currentUser.attributes.firstname[0]}${currentUser.attributes.lastname[0]}`}
       </Avatar>}
         action={<IconButton aria-label='settings'><MoreVertIcon/></IconButton>}
-        title={currentUser.attributes.username} subheader='June 10, 2022'/>
+        title={`${currentUser.attributes.firstname} ${currentUser.attributes.lastname}`} subheader='June 10, 2022'/>
       <CardMedia component='img' height='194' alt='Paella dish'
                  image='https://mui.com/static/images/cards/paella.jpg'/>
       <CardContent>
