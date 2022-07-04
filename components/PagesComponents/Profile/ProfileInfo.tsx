@@ -11,12 +11,12 @@ const ProfileInfo: React.FC<IProfileInfoProps> = ({currentUser}) => {
   return (
     <Paper elevation={6} sx={{borderRadius: '10px', padding: '2em', display: 'flex', gap: '2em'}}>
       <Avatar sx={{ bgcolor: red[500], width: '100px', height: '100px', alignSelf: 'flex-start' }}
-              aria-label="Tony Stark">
-        {currentUser.attributes.username[0]}
+              aria-label={`${currentUser.attributes.firstname} ${currentUser.attributes.lastname}`}>
+        {`${currentUser.attributes.firstname[0]}${currentUser.attributes.lastname[0]}`}
       </Avatar>
       <Box>
         <Typography gutterBottom sx={{fontSize: '2em'}}>
-          {currentUser.attributes.username}
+          {`${currentUser.attributes.firstname} ${currentUser.attributes.lastname}`}
         </Typography>
         <Stack spacing={1}>
           <Typography variant='body1' sx={{fontSize: '0.8em'}}>

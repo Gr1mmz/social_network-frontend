@@ -1,10 +1,10 @@
 import React, {Dispatch, SetStateAction, useRef} from 'react';
 import NextLink from 'next/link';
 import {Formik} from 'formik';
-import * as yup from 'yup';
 import {Box, Button, Link, Stack, TextField, Typography} from '@mui/material';
 import type {AlertColor} from '@mui/material/Alert';
 import {doUserRegistration} from '../../../parse/functions';
+import {validationSchema} from './validationSchema';
 
 interface ISignupProps {
   setAlert: Dispatch<SetStateAction<boolean>>,
@@ -15,16 +15,12 @@ interface ISignupProps {
 const SignupForm: React.FC<ISignupProps> = ({setAlert, setAlertType, setErrorCode}) => {
   const ref = useRef(null);
 
-  const validationSchema = yup.object().shape({
-    username: yup.string().max(30, 'Длина не должна превышать 30 символов').required('Обязательное поле'),
-    email: yup.string().email('Введите e-mail в формате mail@mail.ru').required('Обязательное поле'),
-    password: yup.string().min(8, 'Минимальная длина пароля 8 символов').required('Обязательное поле'),
-  });
-
   return (
     <Formik validateOnBlur validationSchema={validationSchema} innerRef={ref}
             initialValues={{
               username: '',
+              firstname: '',
+              lastname: '',
               email: '',
               password: ''
             }}
@@ -51,6 +47,14 @@ const SignupForm: React.FC<ISignupProps> = ({setAlert, setAlertType, setErrorCod
             <TextField type="text" id="username" label="Имя пользователя" variant="filled" name="username"
                        value={values.username} error={!!(errors.username && touched.username)}
                        helperText={errors.username && touched.username ? errors.username : ''}
+                       onChange={handleChange} onBlur={handleBlur}/>
+            <TextField type="text" id="firstname" label="Ваше имя" variant="filled" name="firstname"
+                       value={values.firstname} error={!!(errors.firstname && touched.firstname)}
+                       helperText={errors.firstname && touched.firstname ? errors.firstname : ''}
+                       onChange={handleChange} onBlur={handleBlur}/>
+            <TextField type="text" id="lastname" label="Ваша фамилия" variant="filled" name="lastname"
+                       value={values.lastname} error={!!(errors.lastname && touched.lastname)}
+                       helperText={errors.lastname && touched.lastname ? errors.lastname : ''}
                        onChange={handleChange} onBlur={handleBlur}/>
             <TextField type="email" id="email" label="E-mail" variant="filled" name="email"
                        value={values.email} error={!!(errors.email && touched.email)}

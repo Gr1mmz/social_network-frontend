@@ -26,17 +26,16 @@ export const checkCurrentUser = async (currentUser: any, setCurrentUser: any, ro
 };
 
 // Get information of current user and return it if user exists
-const getCurrentUser = async function (setCurrentUser: any): Promise<Parse.User | undefined> {
+const getCurrentUser = async function (): Promise<Parse.User | undefined> {
   const currentUser: (Parse.User | undefined) = await Parse.User.current();
   // Update state variable holding current user
   if(currentUser) {
-    setCurrentUser(currentUser);
     return currentUser;
   }
 };
 
 // Do user login for login page
-export const doUserLogIn = async function (ref: any, actions: any, router: any, setCurrentUser: any): Promise<boolean> {
+export const doUserLogIn = async function (ref: any, actions: any, router: any): Promise<boolean> {
   // @ts-ignore
   const {username: usernameValue, password: passwordValue} = ref?.current?.values;
 
@@ -49,7 +48,7 @@ export const doUserLogIn = async function (ref: any, actions: any, router: any, 
       actions.resetForm();
       await router.push('/');
     }
-    await getCurrentUser(setCurrentUser);
+    await getCurrentUser();
     return true;
   } catch (error: any) {
     console.log(`Error! ${error.message}`);
@@ -61,7 +60,13 @@ export const doUserLogIn = async function (ref: any, actions: any, router: any, 
 export const doUserRegistration: (actions: any, setAlert: any, setAlertType: any, setErrorCode: any, ref: any)
   => Promise<boolean> = async (actions, setAlert, setAlertType, setErrorCode, ref) => {
   // @ts-ignore
-  const {username: usernameValue, password: passwordValue, email: emailValue} = ref?.current?.values;
+  const {
+    username: usernameValue,
+    firstname: firstnameValue,
+    lastname: lastnameValue,
+    password: passwordValue,
+    email: emailValue
+  } = ref?.current?.values;
   const showAlert = (type: AlertColor | undefined) => {
     setAlertType(type);
     setAlert(true);
@@ -74,7 +79,15 @@ export const doUserRegistration: (actions: any, setAlert: any, setAlertType: any
   };
 
   try {
-    const createdUser = await Parse.User.signUp(usernameValue, passwordValue, {email: emailValue});
+    const createdUser = await Parse.User.signUp(
+      usernameValue,
+      passwordValue,
+      {
+        email: emailValue,
+        firstname: firstnameValue,
+        lastname: lastnameValue
+      }
+    );
     console.log(`Success! User ${createdUser.getUsername()} was successfully created!`);
     showAlert('success');
     return true;
@@ -98,7 +111,7 @@ export const doUserLogOut = async function (setCurrentUser: any, router: any): P
       router.push('/login');
     }
     // Update state variable holding current user
-    await getCurrentUser(setCurrentUser);
+    await getCurrentUser();
     return true;
   } catch (error: any) {
     console.log(`Error! ${error.message}`);

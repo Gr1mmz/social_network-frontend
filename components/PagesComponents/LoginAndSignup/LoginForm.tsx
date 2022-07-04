@@ -9,7 +9,7 @@ import {Box, Button, Link, Stack, TextField, Typography} from "@mui/material";
 import {doUserLogIn} from '../../../parse/functions';
 
 const LoginForm: React.FC<{}> = (): React.ReactElement => {
-  const [currentUser, setCurrentUser] = useState<Parse.Object | undefined>();
+  // const [currentUser, setCurrentUser] = useState<Parse.Object | undefined>();
 
   const router = useRouter();
   const ref = useRef(null);
@@ -25,7 +25,7 @@ const LoginForm: React.FC<{}> = (): React.ReactElement => {
               password: ''
             }}
             onSubmit={(values, actions) => {
-              doUserLogIn(ref, actions, router, setCurrentUser);
+              doUserLogIn(ref, actions, router);
             }}>
       {({values,
           errors,

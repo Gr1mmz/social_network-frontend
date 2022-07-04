@@ -39,7 +39,9 @@ const ProfilePost: React.FC<IProfilePostProps> = ({currentUser}) => {
   return (
     <Card>
       <CardHeader
-        avatar={<Avatar sx={{bgcolor: red[500]}} aria-label='avatar'>{currentUser.attributes.username[0]}</Avatar>}
+        avatar={<Avatar sx={{bgcolor: red[500]}} aria-label='avatar'>
+          {`${currentUser.attributes.firstname[0]}${currentUser.attributes.lastname[0]}`}
+      </Avatar>}
         action={<IconButton aria-label='settings'><MoreVertIcon/></IconButton>}
         title={currentUser.attributes.username} subheader='June 10, 2022'/>
       <CardMedia component='img' height='194' alt='Paella dish'
