@@ -1,4 +1,4 @@
-import Parse from 'parse';
+import Parse, {User} from 'parse';
 import {AlertColor} from '@mui/material';
 
 // Initialization Parse when starting application
@@ -116,5 +116,20 @@ export const doUserLogOut = async function (setCurrentUser: any, router: any): P
   } catch (error: any) {
     console.log(`Error! ${error.message}`);
     return false;
+  }
+};
+
+export const doQueryByName = async (username: any) => {
+  const query = new Parse.Query(User);
+  query.contains('username', `${username}`);
+  try {
+    const profile = await query.find();
+    // console.log(profile[0].id);
+    const id = await profile[0].id;
+    return id;
+  }
+  catch (e: any) {
+    console.log(`Error! ${e.message}`);
+    return null;
   }
 };

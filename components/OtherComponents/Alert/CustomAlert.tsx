@@ -16,10 +16,7 @@ const CustomAlert: React.FC<ICustomAlertProps> = ({type, handleClick, errorCode}
            sx={{position: 'absolute', bottom: '1em', left: '50%', transform: 'translateX(-50%)'}}>
       {type === 'success'
         ? <>
-          {`Регистрация прошла успешно. Перейдите на страницу `}
-          <NextLink href="/login" passHref>
-            <Link>входа</Link>
-          </NextLink>
+          {`Регистрация прошла успешно. Через 5 секунд вы будете перенаправлены на страницу вашего профиля`}
         </>
         : <>
           {errorCode && (Object.prototype.hasOwnProperty.call(errorCodes, errorCode))
