@@ -4,7 +4,7 @@ export const validationSchema = yup.object().shape({
   username: yup.string()
     .max(30, 'Длина не должна превышать 30 символов')
     .min(5, 'Минимальное количество символов - 5')
-    .matches(/^[a-zA-Z0-9]{5,30}$/,
+    .matches(/^[a-z0-9]{5,30}$/,
       {
         excludeEmptyString: true,
         message: `Можно использовать только латиницу и цифры без пробелов`

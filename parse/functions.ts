@@ -129,7 +129,7 @@ export const getUserDataById = async (id: string) => {
   const query = new Parse.Query(User);
   query.contains('objectId', id);
   const result = await query.find();
-  return result;
+  return result[0];
 }
 
 export const getUserIdByUsername = async (username: string) => {
