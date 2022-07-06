@@ -6,17 +6,28 @@ import ProfileInfo from '../../components/PagesComponents/Profile/ProfileInfo';
 import ProfilePosts from '../../components/PagesComponents/Profile/ProfilePosts';
 import ProfileFriends from '../../components/PagesComponents/Profile/ProfileFriends';
 import {useRouter} from 'next/router';
-import {User} from 'parse';
-import Parse from 'parse';
-import {doQueryByName} from '../../parse/functions';
+import Parse, {User} from 'parse';
+import {encodeParseQuery, useParseQuery} from '@parse/react-ssr';
+import {getUserDataById, getUserIdByUsername} from '../../parse/functions';
+// import {doQueryByName, getUserIdByUsername, initializeParse} from '../../parse/functions';
 
-const UserPage = () => {
-  const [queryResult, setQueryResult] = useState<string | null> ();
-  const router = useRouter();
-  console.log(queryResult);
-
+// const UserPage = ({parseQuery}: any) => {
+const UserPage = (props: any) => {
+  console.log(props);
   useEffect(() => {
-    doQueryByName(router.query.username).then(data => setQueryResult(data));
+    const getUserIdByUsername = async (username: string) => {
+      try {
+        const parseQuery = new Parse.Query(User);
+        parseQuery.contains('username', `${username}`);
+        const id = await parseQuery.find();
+        console.log(id);
+        return id;
+      } catch (e: any) {
+        console.log(`Error! ${e.message}`);
+        return false;
+      }
+    }
+    getUserIdByUsername(props.id);
   }, [])
 
   return (
@@ -51,10 +62,29 @@ const UserPage = () => {
         {/*    </Grid>*/}
         {/*  </MainLayout>*/}
         {/*)}*/}
-        {`profile page ${queryResult}`}
+        {`profile page`}
       </main>
     </div>
   );
 };
 
 export default UserPage;
+
+export const getServerSideProps = async (ctx: any) => {
+  // const parseQuery = new Parse.Query(User);
+  // parseQuery.contains('username', `${ctx.query.username}`);
+  // return {
+  //   props: {
+  //     parseQuery: await encodeParseQuery(parseQuery), // Return encoded Parse Query for server side rendering
+  //   },
+  // };
+
+  // const id = await getUserIdByUsername(ctx.query.username);
+  // return {
+  //   props: {
+  //     id
+  //   }
+  // }
+
+  return {props: {id: ctx.query.username}}
+}

@@ -6,7 +6,7 @@ import { CacheProvider, type EmotionCache } from '@emotion/react';
 import createEmotionCache from '../src/createEmotionCache';
 import {CssBaseline} from '@mui/material';
 import {theme} from '../src/theme';
-import {initializeParse} from '../parse/functions';
+import {parseInitialize} from '../parse/functions';
 import '../styles/globals.css';
 
 const clientSideEmotionCache = createEmotionCache();
@@ -18,7 +18,9 @@ interface MyAppProps extends AppProps {
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-  useEffect(() => initializeParse(), []);
+  parseInitialize();
+
+  // useEffect(() => parseInitialize(), []);
 
   return (
     <CacheProvider value={emotionCache}>

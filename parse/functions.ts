@@ -1,12 +1,18 @@
 import Parse, {User} from 'parse';
 import {AlertColor} from '@mui/material';
+import { initializeParse } from "@parse/react-ssr";
 
 // Initialization Parse when starting application
-export const initializeParse = () => {
-  Parse.initialize(process.env.NEXT_PUBLIC_PARSE_APPLICATION_ID as string,
+// export const initializeParse = () => {
+//   Parse.initialize(process.env.NEXT_PUBLIC_PARSE_APPLICATION_ID as string,
+//     process.env.NEXT_PUBLIC_PARSE_JAVASCRIPT_KEY as string);
+//   Parse.serverURL = process.env.NEXT_PUBLIC_PARSE_HOST_URL as string;
+// };
+export const parseInitialize = () => {
+  initializeParse('https://socialnetwork.b4a.io',
+    process.env.NEXT_PUBLIC_PARSE_APPLICATION_ID as string,
     process.env.NEXT_PUBLIC_PARSE_JAVASCRIPT_KEY as string);
-  Parse.serverURL = process.env.NEXT_PUBLIC_PARSE_HOST_URL as string;
-};
+}
 
 // Check current user. If user is no logged - redirect to login page
 export const checkCurrentUser = async (currentUser: any, setCurrentUser: any, router: any): Promise<Boolean> => {
@@ -119,17 +125,22 @@ export const doUserLogOut = async function (setCurrentUser: any, router: any): P
   }
 };
 
-export const doQueryByName = async (username: any) => {
+export const getUserDataById = async (id: string) => {
   const query = new Parse.Query(User);
-  query.contains('username', `${username}`);
+  query.contains('objectId', id);
+  const result = await query.find();
+  return result;
+}
+
+export const getUserIdByUsername = async (username: string) => {
   try {
-    const profile = await query.find();
-    // console.log(profile[0].id);
-    const id = await profile[0].id;
+    const parseQuery = new Parse.Query(User);
+    parseQuery.contains('username', `${username}`);
+    const id = await parseQuery.find();
+    // console.log(id);
     return id;
-  }
-  catch (e: any) {
+  } catch (e: any) {
     console.log(`Error! ${e.message}`);
-    return null;
+    return false;
   }
-};
+}
