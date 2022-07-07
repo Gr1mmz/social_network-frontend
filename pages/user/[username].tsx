@@ -1,4 +1,4 @@
-import React, {Attributes, useEffect, useState} from 'react';
+import React, {Attributes, SetStateAction, useEffect, useState} from 'react';
 import Head from 'next/head';
 import Parse, {User} from 'parse';
 import {encodeParseQuery, useParseQuery} from '@parse/react-ssr';
@@ -7,27 +7,35 @@ import MainLayout from '../../components/PagesComponents/MainLayout/MainLayout';
 import ProfileInfo from '../../components/PagesComponents/Profile/ProfileInfo';
 import ProfilePosts from '../../components/PagesComponents/Profile/ProfilePosts';
 import ProfileFriends from '../../components/PagesComponents/Profile/ProfileFriends';
-import {getCurrentUser, getUserDataById} from '../../parse/functions';
+import {getUserDataById} from '../../parse/functions';
 import Custom404 from '../404';
 
 const UserPage = ({idQuery}: any) => {
   const [user, setUser] = useState<User<Attributes>>();
   const [error, setError] = useState(false);
-  const [isOwner, setIsOwner] = useState(false);
-  const {results, isLoading} = useParseQuery(idQuery);
+  const [isOwner, setIsOwner] = useState<SetStateAction<boolean>>(false);
+  const [isLoading, setIsLoading] = useState<SetStateAction<boolean>>(true);
+  const {results} = useParseQuery(idQuery);
 
   useEffect(() => {
-    (results?.length === 0 && !isLoading)
+    (results?.length === 0)
       ? setError(true)
-      : getUserDataById(`${results?.[0].id}`).then(user => setUser(user));
-    const checkCurrentUser = async () => {
+      : getUserDataById(`${results?.[0].id}`)
+        .then(user => setUser(user))
+        .then(async () => {
+          const currentUser = await getCurrentUser();
+          if (user?.id === currentUser?.id && !isLoading) {
+            setIsOwner(true);
+          }
+        })
+        .then(() => setIsLoading(false));
+    const getCurrentUser = async () => {
       const currentUser: (Parse.User | null) = await Parse.User.currentAsync();
-      console.log(currentUser);
+      return currentUser;
     };
-    checkCurrentUser();
   }, [results]);
 
-  if (user) {
+  if (user && !isLoading) {
     return (
       <div>
         <Head>
@@ -49,7 +57,7 @@ const UserPage = ({idQuery}: any) => {
               <Grid item xs={12}>
                 <Grid container spacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' >
                   <Grid item xs={8} xl={5}>
-                    <ProfilePosts currentUser={user}/>
+                    <ProfilePosts currentUser={user} isOwner={isOwner} />
                   </Grid>
                   <Grid item xs={4} xl={3}>
                     <ProfileFriends/>
