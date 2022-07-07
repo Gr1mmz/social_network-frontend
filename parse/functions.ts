@@ -32,7 +32,7 @@ export const checkCurrentUser = async (currentUser: any, setCurrentUser: any, ro
 };
 
 // Get information of current user and return it if user exists
-const getCurrentUser = async function (): Promise<Parse.User | undefined> {
+export const getCurrentUser = async function (): Promise<Parse.User | undefined> {
   const currentUser: (Parse.User | undefined) = await Parse.User.current();
   // Update state variable holding current user
   if(currentUser) {
